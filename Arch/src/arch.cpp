@@ -129,9 +129,21 @@ bool Arch::systemd_setup() {
             myfile << "title Arch Linux\n";
             myfile << "linux /vmlinuz-linux\n";
             myfile << "initrd /initramfs-linux.img\n";
-            myfile << "options root=PARTUUID="+result+" rw";
+
+            result.erase(std::remove(result.begin(), result.end(), '\n'), result.end());
+
+            myfile << "options root=PARTUUID="+result+" rw quiet splash";
             myfile.close();
-            response = true;
+
+            // To hide any kernel messages from the console
+            myfile.open("/mnt/etc/sysctl.d/20-quiet-printk.conf");
+            if(myfile.is_open()) {
+
+                myfile << "kernel.printk = 3 3 3 3";
+                myfile.close();
+
+                response = true;
+            }
         }
     }
 

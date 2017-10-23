@@ -1,6 +1,6 @@
 # Arch Linux Installation V2.2.0
-
 ![alt text](http://ninjadolinux.com.br/wp-content/uploads/2016/09/arch-linux.jpg)
+--> Install Arch Linux has never been easier!
 
 ## Partitioning Guide:   [UEFI system]
 
@@ -18,12 +18,7 @@ First of all, you need to partitioning your disk with program requeriments, you 
 **1)** Download the repository to your Arch live
 
 ```
-wget https://github.com/MarcoRhayden/Arch-Linux-UEFI-system/archive/master.zip
-
-```
-
-```
-unzip master.zip
+wget https://github.com/MarcoRhayden/Arch Linux UEFI system.git
 ```
 
 **2)** Synchronize the packages
@@ -47,7 +42,7 @@ pacman -S gcc
 **6)** Compile the project and start installation
 
 ```
-make
+gcc -x c++ -lstdc++ core.cpp src/*.cpp -oArch.out
 ```
 ```
 ./Arch.out
