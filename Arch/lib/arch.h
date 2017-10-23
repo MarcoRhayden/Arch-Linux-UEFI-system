@@ -2,6 +2,7 @@
 #define __ARCH_H__
 
 #include <iostream>
+#include <algorithm>
 #include <limits>
 #include <memory>
 #include <fstream>
