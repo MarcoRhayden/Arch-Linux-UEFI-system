@@ -24,6 +24,7 @@ class Arch {
         const std::string rootPassword = "ROOTPASSWORD"; // ROOT PASSWORD
         const std::string language = "en_US.UTF-8"; // FOR PORTUGUESE USE -> "pt_BR.UTF-8"
         const std::string zone_info = "America/Sao_Paulo"; // ZONE INFO
+        const std::string keymap = "br-abnt2"; // KEYMAP
         // ================================================================================
         // ================================================================================
 

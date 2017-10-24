@@ -142,7 +142,15 @@ bool Arch::systemd_setup() {
                 myfile << "kernel.printk = 3 3 3 3";
                 myfile.close();
 
-                response = true;
+                // Keymap
+                myfile.open("/mnt/etc/vconsole.conf");
+                if(myfile.is_open()) {
+
+                    myfile << "KEYMAP=" << keymap;
+                    myfile.close();
+
+                    response = true;
+                }
             }
         }
     }
