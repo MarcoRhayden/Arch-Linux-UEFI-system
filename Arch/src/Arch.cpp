@@ -1,16 +1,26 @@
-#include "../lib/arch.h"
-
-Arch::Arch() {
-    if(checkConnection() != 0) {
+//File: Arch.cpp
+#include "../lib/Arch.hpp"
+/*---------------------------------------------------------------------*/
+/*--- handle - Handle arch installation                             ---*/
+/*---------------------------------------------------------------------*/
+void Arch::Install::handle()
+{
+    if (Arch::Install::checkConnection() != 0)
+    {
         std::cout << "--> [ERROR] No internet connection..." << std::endl;
         std::cout << "--> [ERROR] Installation aborted..." << std::endl;
-    } else {
-        if(check_partitions() != 0) {
+    }
+    else
+    {
+        if(Arch::Install::check_partitions() != 0)
+        {
             std::cout << "--> [ERROR] Wrong partitions table..." << std::endl;
             std::cout << "--> The partitions configuration must be: "
                 << "sda1(boot)[EF00] 500MB, sda2(swap)[8200] ?G, "
                 << "sda3(arch)[8300] ?G" << std::endl;
-        } else {
+        }
+        else
+        {
             // ----------------------------------------------------------------
             // ... [OK] Start Installation ...
             system_call("mkfs.vfat /dev/sda1"); // formating boot partition
@@ -19,7 +29,9 @@ Arch::Arch() {
             system_call("mkfs.ext4 /dev/sda3"); // format arch partition
             system_call("timedatectl set-ntp true"); // update clock
             system_call("pacman -Syy"); // synchronizing package
-            if(ArchInstall()) {
+
+            if (Arch::Install::start())
+            {
                 // ... [OK] Installation Successfully ...
                 std::cout << "--> [OK] Arch Linux successfully installed!" << std::endl;
             }
@@ -27,21 +39,24 @@ Arch::Arch() {
         }
     }
 }
-
-Arch::~Arch() {
-
-}
-
-void Arch::system_call(const std::string arg) {
+/*---------------------------------------------------------------------*/
+/*--- system_call - Requests a core system service                  ---*/
+/*---------------------------------------------------------------------*/
+void Arch::Install::system_call(const std::string arg)
+{
     int status = system(arg.c_str());
-    if(status != 0) {
+    if (status != 0)
+    {
         std::cout << "--> [ERROR] System call failed..." << std::endl;
         std::cout << "--> [ERROR] Installation aborted..." << std::endl;
         exit(1);
     }
 }
-
-bool Arch::checkConnection() {
+/*---------------------------------------------------------------------*/
+/*--- checkConnection - Check network connection                    ---*/
+/*---------------------------------------------------------------------*/
+bool Arch::Install::checkConnection()
+{
     struct addrinfo host_info;
     struct addrinfo *host_info_list;
 
@@ -52,9 +67,12 @@ bool Arch::checkConnection() {
 
     return(getaddrinfo("www.google.com", "80", &host_info, &host_info_list));
 }
-
-// Check the partition table to see if it is in the correct software standard
-int Arch::check_partitions() {
+/*---------------------------------------------------------------------*/
+/*--- check_partitions - Check the partition table to see if it     ---*/
+/*--- is in the correct software standard                           ---*/
+/*---------------------------------------------------------------------*/
+int Arch::Install::check_partitions()
+{
     int status;
     const char sda_boot[] = "/dev/sda1"; // EFI PARTITION
     const char sda_swap[] = "/dev/sda2"; // Swap PARTITION
@@ -74,8 +92,11 @@ int Arch::check_partitions() {
 
     return(0);
 }
-
-bool Arch::ArchInstall() {
+/*---------------------------------------------------------------------*/
+/*--- start - Start Arch Linux installation                         ---*/
+/*---------------------------------------------------------------------*/
+bool Arch::Install::start()
+{
     bool response = true;
 
     // ----------------------------------------------------------------
@@ -106,8 +127,11 @@ bool Arch::ArchInstall() {
 
     return(response);
 }
-
-bool Arch::systemd_setup() {
+/*---------------------------------------------------------------------*/
+/*--- systemd_setup - Configuring installation                      ---*/
+/*---------------------------------------------------------------------*/
+bool Arch::Install::systemd_setup()
+{
     system_call("arch-chroot /mnt /bin/bash -c \"bootctl install\"");
 
     bool response = false;
@@ -116,16 +140,23 @@ bool Arch::systemd_setup() {
     std::ofstream myfile;
 
     std::shared_ptr<FILE> pipe(popen("blkid -s PARTUUID -o value /dev/sda3", "r"), pclose);
-    if (!pipe) {
+    if (!pipe)
+    {
         throw std::runtime_error("--> [ERROR] popen() failed...");
-    } else {
-        while (!feof(pipe.get())) {
+    }
+    else
+    {
+        while (!feof(pipe.get()))
+        {
             if (fgets(buf, 128, pipe.get()) != NULL)
+            {
                 result += buf;
+            }
         }
 
         myfile.open("/mnt/boot/loader/entries/arch.conf");
-        if(myfile.is_open()) {
+        if(myfile.is_open())
+        {
             myfile << "title Arch Linux\n";
             myfile << "linux /vmlinuz-linux\n";
             myfile << "initrd /initramfs-linux.img\n";
@@ -137,15 +168,15 @@ bool Arch::systemd_setup() {
 
             // To hide any kernel messages from the console
             myfile.open("/mnt/etc/sysctl.d/20-quiet-printk.conf");
-            if(myfile.is_open()) {
-
+            if(myfile.is_open())
+            {
                 myfile << "kernel.printk = 3 3 3 3";
                 myfile.close();
 
                 // Keymap
                 myfile.open("/mnt/etc/vconsole.conf");
-                if(myfile.is_open()) {
-
+                if(myfile.is_open())
+                {
                     myfile << "KEYMAP=" << keymap;
                     myfile.close();
 

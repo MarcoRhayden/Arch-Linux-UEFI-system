@@ -39,7 +39,7 @@ pacman -S gcc
 **5**) Make sure your **partition table** is the same as the previous **partitioning guide**
 
 
-**6)** Compile the project and start installation
+**6)** Go to folder Arch compile the project and start installation
 
 ```
 gcc -x c++ -lstdc++ core.cpp src/*.cpp -oArch.out
