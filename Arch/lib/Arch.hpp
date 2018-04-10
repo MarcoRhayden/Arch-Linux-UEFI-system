@@ -48,7 +48,7 @@ namespace Arch
                 // ================================================================================
                 this->hostname = "arch"; // YOUR COMPUTER NAME
                 this->username = "rhayden"; // YOUR USER NAME
-                this->userPassword = "USERPASSWORD"; // YOUR USER NAME
+                this->userPassword = "USERPASSWORD"; // USER PASSWORD
                 this->rootPassword = "ROOTPASSWORD"; // ROOT PASSWORD
                 this->language = "en_US.UTF-8"; // FOR PORTUGUESE USE -> "pt_BR.UTF-8"
                 this->zone_info = "America/Sao_Paulo"; // ZONE INFO
