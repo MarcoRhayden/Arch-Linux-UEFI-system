@@ -33,16 +33,16 @@ pacman -Syy
 pacman -S gcc
 ```
 
-**4)** Open the **arch.h** header and setup your own config **(IMPORTANT)**
+**4)** Open the **Arch/lib/Arch.hpp** header and setup your own config **(IMPORTANT)**
 
 
 **5**) Make sure your **partition table** is the same as the previous **partitioning guide**
 
 
-**6)** Go to folder Arch compile the project and start installation
+**6)** Go to folder 'Arch' compile the project and start installation
 
 ```
-gcc -x c++ -lstdc++ core.cpp src/*.cpp -oArch.out
+gcc -x c++ -lstdc++ -lreadline Core.cpp src/*.cpp -oArch.out
 ```
 ```
 ./Arch.out
