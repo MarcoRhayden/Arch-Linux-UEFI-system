@@ -283,6 +283,15 @@ bool Arch::Install::XFCE_install()
             response = true;
             of.close();
         }
+
+        if(response) 
+        {
+            Arch::Install::system_call("arch-chroot /mnt /bin/bash -c \"chown -R "+this->username+":"+this->username+
+                " /mnt/home/"+this->username+"/.xinitrc\"");
+
+            Arch::Install::system_call("arch-chroot /mnt /bin/bash -c \"chown -R "+this->username+":"+this->username+
+                " /mnt/home/"+this->username+"/.gtkrc-2.0\"");
+        }
     }
 
     return(response);
