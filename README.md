@@ -1,4 +1,5 @@
 # Arch Linux Installer — v2.2.0
+![alt text](http://ninjadolinux.com.br/wp-content/uploads/2016/09/arch-linux.jpg)
 
 > A modular, data-driven Arch Linux installer using **CMake**, **YAML manifests**, and a simple **pipeline/runner** architecture.  
 > Supports XFCE and i3 desktops out of the box. Includes a **dry-run** mode for safe validation.
