@@ -173,7 +173,3 @@ Create a new manifest at `src/manifests/desktops/<your-desktop>.yml`, then run w
 Use the existing `xfce.yml` / `i3.yml` as templates.
 
 ---
-
-## License
-
-MIT (or choose the license you prefer for this project).
