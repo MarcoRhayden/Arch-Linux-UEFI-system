@@ -94,19 +94,6 @@ third_party/**/build/
 .ninja_log
 
 # -----------------------------
-# Logs / dumps / sanitizers
-# -----------------------------
-*.log
-*.trace
-*.dmp
-*.core
-core
-vgcore.*
-*.asan.*
-*.tsan.*
-*.lsan.*
-
-# -----------------------------
 # Coverage
 # -----------------------------
 *.gcda
