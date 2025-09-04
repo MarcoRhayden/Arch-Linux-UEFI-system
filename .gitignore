@@ -1,32 +1,139 @@
-# Prerequisites
-*.d
+# -----------------------------
+# OS / Editor clutter
+# -----------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*.swo
 
-# Compiled Object files
+# Windows
+Thumbs.db
+Desktop.ini
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# Xcode (se alguém abrir no Xcode)
+*.xcbkptlist
+*.xcworkspace
+*.xcuserstate
+*.xcuserdatad
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+
+# -----------------------------
+# C/C++ toolchain outputs
+# -----------------------------
+# Dependência/objeto/headers pré-compilados
+*.d
 *.slo
 *.lo
 *.o
 *.obj
-
-# Precompiled Headers
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
+# Bibliotecas
 *.lai
 *.la
 *.a
 *.lib
+*.so
+*.so.*
+*.dylib
+*.dll
 
-# Executables
+# Executáveis
 *.exe
 *.out
 *.app
+*.run
+
+# Fortran modules (caso algum dep use)
+*.mod
+*.smod
+
+# -----------------------------
+# CMake / Build trees
+# (use sempre out-of-source builds)
+# -----------------------------
+# Pastas de build comuns
+/build/
+/build-*/
+/cmake-build-*/
+/out/
+/bin/
+/lib/
+/dist/
+
+# Artefatos CMake (se alguém rodar no source dir por acidente)
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+CTestCustom.cmake
+install_manifest.txt
+Testing/
+Makefile
+compile_commands.json
+_generatorConfig.txt
+
+# FetchContent / External deps (geralmente dentro do build/)
+# (Se algum aparecer fora do build por acidente)
+**/_deps/
+_external/
+third_party/**/build/
+
+# Ninja
+.ninja_deps
+.ninja_log
+
+# -----------------------------
+# Logs / dumps / sanitizers
+# -----------------------------
+*.log
+*.trace
+*.dmp
+*.core
+core
+vgcore.*
+*.asan.*
+*.tsan.*
+*.lsan.*
+
+# -----------------------------
+# Coverage
+# -----------------------------
+*.gcda
+*.gcno
+*.gcov
+*.profraw
+*.profdata
+lcov.info
+coverage/
+.coverage
+
+# -----------------------------
+# Packaging / archives
+# -----------------------------
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tar.xz
+
+# -----------------------------
+# Env / misc
+# -----------------------------
+.env
+.env.*
+*.tmp
+*.temp
+tmp/
+.cache/
