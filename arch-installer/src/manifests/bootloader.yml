@@ -1,0 +1,26 @@
+steps:
+  - type: chroot
+    cmd: "bootctl install"
+
+  - type: capture
+    key: "root_partuuid"
+    cmd: "blkid -s PARTUUID -o value /dev/sda3"
+
+  - type: file
+    path: "/mnt/boot/loader/entries/arch.conf"
+    mode: "0644"
+    template: |
+      title   Arch Linux
+      linux   /vmlinuz-linux
+      initrd  /initramfs-linux.img
+      options root=PARTUUID=${root_partuuid} rw quiet splash
+
+  - type: file
+    path: "/mnt/etc/sysctl.d/20-quiet-printk.conf"
+    mode: "0644"
+    content: "kernel.printk = 3 3 3 3\n"
+
+  - type: file
+    path: "/mnt/etc/vconsole.conf"
+    mode: "0644"
+    content: "KEYMAP=${keymap}\n"

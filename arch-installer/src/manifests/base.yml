@@ -1,0 +1,72 @@
+steps:
+  - type: run
+    cmd: "mkfs.vfat -F32 /dev/sda1"
+
+  - type: run
+    cmd: "mkswap /dev/sda2"
+
+  - type: run
+    cmd: "swapon /dev/sda2"
+    guard_key: "swap_on"
+
+  - type: run
+    cmd: "mkfs.ext4 -F /dev/sda3"
+
+  - type: run
+    cmd: "timedatectl set-ntp true"
+
+  - type: run
+    cmd: "pacman -Syy --noconfirm"
+
+  - type: run
+    cmd: "mount /dev/sda3 /mnt"
+    guard_key: "mnt_root"
+
+  - type: run
+    cmd: "mkdir -p /mnt/boot"
+
+  - type: run
+    cmd: "mount /dev/sda1 /mnt/boot"
+    guard_key: "mnt_boot"
+
+  - type: chroot
+    cmd: "pacstrap -K /mnt base base-devel --noconfirm"
+
+  - type: run
+    cmd: "genfstab -U /mnt >> /mnt/etc/fstab"
+
+  - type: chroot
+    cmd: "ln -sf /usr/share/zoneinfo/${zone} /etc/localtime"
+
+  - type: chroot
+    cmd: "hwclock --systohc --utc"
+
+  - type: chroot
+    cmd: "sed -i \"s/^#\\(${lang}\\)/\\1/\" /etc/locale.gen || echo ${lang} >> /etc/locale.gen"
+
+  - type: chroot
+    cmd: "locale-gen"
+
+  - type: file
+    path: "/mnt/etc/locale.conf"
+    mode: "0644"
+    content: "LANG=${lang}\n"
+
+  - type: file
+    path: "/mnt/etc/hostname"
+    mode: "0644"
+    content: "${hostname}\n"
+
+  - type: service
+    action: "enable"
+    name: "NetworkManager"
+
+  - type: userset
+    username: "${user}"
+    groups: ["users","wheel"]
+    shell: "/bin/bash"
+    password: "${user_password}"
+
+  - type: userset
+    username: "root"
+    password: "${root_password}"
